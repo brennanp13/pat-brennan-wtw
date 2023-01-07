@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace InterviewProject.Domain.Models
 {
-  public class OpenWeatherLocation
+  public class AccuWeatherLocation
   {
     public int Version { get; set; }
     public string Key { get; set; }

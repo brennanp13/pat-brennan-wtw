@@ -13,8 +13,8 @@ namespace InterviewProjects.IntegrationTests
 {
   public class WeatherForecastControllerTests
   {
-    private OpenWeatherService _sut;
-    private readonly Mock<ILogger<OpenWeatherService>> _loggerMock;
+    private AccuWeatherService _sut;
+    private readonly Mock<ILogger<AccuWeatherService>> _loggerMock;
     private WeatherAPISettings _weatherAPISettings;
     private HttpClient _httpClient;
 
@@ -32,7 +32,7 @@ namespace InterviewProjects.IntegrationTests
 
       _loggerMock = new();
 
-      _sut = new OpenWeatherService(_weatherAPISettings, _httpClient, _loggerMock.Object);
+      _sut = new AccuWeatherService(_weatherAPISettings, _httpClient, _loggerMock.Object);
     }
 
     [Fact]
@@ -97,7 +97,7 @@ namespace InterviewProjects.IntegrationTests
         BaseURL = BaseUrl
       };
 
-       _sut = new OpenWeatherService(_weatherAPISettings, _httpClient, _loggerMock.Object);
+       _sut = new AccuWeatherService(_weatherAPISettings, _httpClient, _loggerMock.Object);
       // Act
 
       var ex = await Assert.ThrowsAsync<ArgumentNullException>(() => _sut.PostalCodeSearch(postalCode));

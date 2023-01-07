@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace InterviewProject.Domain.Services.WeatherService
 {
-  public class OpenWeatherService : IWeatherService
+  public class AccuWeatherService : IWeatherService
   {
     private readonly WeatherAPISettings _weatherAPISettings;
     private readonly HttpClient _httpClient;
-    private readonly ILogger<OpenWeatherService> _logger;
+    private readonly ILogger<AccuWeatherService> _logger;
 
-    public OpenWeatherService(WeatherAPISettings weatherAPISettings, HttpClient httpClient, ILogger<OpenWeatherService> logger)
+    public AccuWeatherService(WeatherAPISettings weatherAPISettings, HttpClient httpClient, ILogger<AccuWeatherService> logger)
     {
       _weatherAPISettings = weatherAPISettings;
       _logger = logger;
@@ -42,7 +42,7 @@ namespace InterviewProject.Domain.Services.WeatherService
       {
 
         var content = await apiResponse.Content.ReadAsStringAsync();
-        var locations = JsonConvert.DeserializeObject<IEnumerable<OpenWeatherLocation>>(content);
+        var locations = JsonConvert.DeserializeObject<IEnumerable<AccuWeatherLocation>>(content);
         var result = locations.Select((location) => new WeatherLocation() { Key = location.Key, Name = location.EnglishName, Rank = location.Rank });
 
         return result;

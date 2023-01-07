@@ -24,9 +24,9 @@ namespace InterviewProject
     {
 
       services.AddControllersWithViews();
-      services.AddSingleton<IWeatherService, OpenWeatherService>();
+      services.AddSingleton<IWeatherService, AccuWeatherService>();
 
-      services.AddHttpClient<IWeatherService, OpenWeatherService>();
+      services.AddHttpClient<IWeatherService, AccuWeatherService>();
 
 
       // In production, the React files will be served from this directory
