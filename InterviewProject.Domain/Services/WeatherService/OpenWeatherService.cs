@@ -1,4 +1,5 @@
-﻿using InterviewProject.Domain.Models;
+﻿using InterviewProject.Domain.Exceptions;
+using InterviewProject.Domain.Models;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
@@ -48,7 +49,7 @@ namespace InterviewProject.Domain.Services.WeatherService
       } else
       {
         _logger.LogError("Open Weather API response was unsuccessful", apiResponse);
-        throw new Exception("Open Weather API response was unsuccessful");
+        throw new AccuWeatherException("Open Weather API response was unsuccessful");
       }
 
     }
