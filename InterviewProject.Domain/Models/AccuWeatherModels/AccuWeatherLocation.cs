@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace InterviewProject.Domain.Models
+namespace InterviewProject.Domain.Models.AccuWeatherModels
 {
   public class AccuWeatherLocation
   {

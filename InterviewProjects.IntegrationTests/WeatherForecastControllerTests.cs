@@ -97,10 +97,37 @@ namespace InterviewProjects.IntegrationTests
         BaseURL = BaseUrl
       };
 
-       _sut = new AccuWeatherService(_weatherAPISettings, _httpClient, _loggerMock.Object);
+      _sut = new AccuWeatherService(_weatherAPISettings, _httpClient, _loggerMock.Object);
       // Act
 
       var ex = await Assert.ThrowsAsync<ArgumentNullException>(() => _sut.PostalCodeSearch(postalCode));
+    }
+
+    [Fact]
+    public async Task GetFiveDayForecaseByPostalCode_ReturnsValidForecast()
+    {
+      // Arrange
+      var locationKey = "7839_PC";
+
+      // Act
+
+      var weatherForecast = await _sut.GetFiveDayWeatherForecast(locationKey);
+
+      //Assert
+
+      Assert.NotNull(weatherForecast);
+      Assert.NotEmpty(weatherForecast);
+    }
+
+    [Fact]
+    public async Task GetFiveDayForecaseByPostalCode_ReturnsNoResults()
+    {
+      // Arrange
+      var locationKey = "xx";
+
+      // Act
+
+      var ex = await Assert.ThrowsAsync<AccuWeatherException>(() => _sut.GetFiveDayWeatherForecast(locationKey));
     }
   }
 }

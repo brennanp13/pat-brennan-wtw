@@ -1,5 +1,6 @@
 ﻿using InterviewProject.Domain.Exceptions;
 using InterviewProject.Domain.Models;
+using InterviewProject.Domain.Models.AccuWeatherModels;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
@@ -24,34 +25,64 @@ namespace InterviewProject.Domain.Services.WeatherService
 
 
       var clientHandler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate };
-      _httpClient = new HttpClient(clientHandler);
+      _httpClient = new HttpClient(clientHandler); // need to set in start up
 
       _httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip"); // best practice per weahter api documentation
     }
 
-    public Task<IEnumerable<WeatherForecast>> GetFiveDayWeatherForecast(string location)
+    public async Task<IEnumerable<WeatherForecast>> GetFiveDayWeatherForecast(string locationKey)
     {
-      throw new NotImplementedException();
+      try
+      {
+        var url = BuildFiveDayForecaseURL(locationKey);
+        var apiResponse = await _httpClient.GetAsync(url);
+        if (apiResponse.IsSuccessStatusCode)
+        {
+
+          var content = await apiResponse.Content.ReadAsStringAsync();
+          var forecast = JsonConvert.DeserializeObject<AccuWeatherForecast>(content);
+          var result = forecast.DailyForecasts.Select((f) => new WeatherForecast() { Date = f.Date, TemperatureC = f.Temperature.Maximum.Value, Summary = f.Day.IconPhrase });
+
+          return result;
+        }
+        else
+        {
+          _logger.LogError("Open Weather API response was unsuccessful", apiResponse);
+          throw new AccuWeatherException("Open Weather API response was unsuccessful");
+        }
+      } catch(Exception ex)
+      {
+        _logger.LogError("There was an error trying to get 5 day forecast", ex);
+        throw ex;
+      }
+
     }
 
     public async Task<IEnumerable<WeatherLocation>> PostalCodeSearch(string postalCode)
     {
-      var url = BuildPostalCodeSearchURL(postalCode);
-      var apiResponse = await _httpClient.GetAsync(url);
-      if (apiResponse.IsSuccessStatusCode)
+      try
       {
+        var url = BuildPostalCodeSearchURL(postalCode);
+        var apiResponse = await _httpClient.GetAsync(url);
+        if (apiResponse.IsSuccessStatusCode)
+        {
 
-        var content = await apiResponse.Content.ReadAsStringAsync();
-        var locations = JsonConvert.DeserializeObject<IEnumerable<AccuWeatherLocation>>(content);
-        var result = locations.Select((location) => new WeatherLocation() { Key = location.Key, Name = location.EnglishName, Rank = location.Rank });
+          var content = await apiResponse.Content.ReadAsStringAsync();
+          var locations = JsonConvert.DeserializeObject<IEnumerable<AccuWeatherLocation>>(content);
+          var result = locations.Select((location) => new WeatherLocation() { Key = location.Key, Name = location.EnglishName, Rank = location.Rank });
 
-        return result;
-      } else
+          return result;
+        }
+        else
+        {
+          _logger.LogError("Open Weather API response was unsuccessful", apiResponse);
+          throw new AccuWeatherException("Open Weather API response was unsuccessful");
+        }
+      } catch (Exception ex)
       {
-        _logger.LogError("Open Weather API response was unsuccessful", apiResponse);
-        throw new AccuWeatherException("Open Weather API response was unsuccessful");
+        _logger.LogError("There was an error trying to get location by postal code", ex);
+        throw ex;
       }
-
     }
 
     private string BuildPostalCodeSearchURL(string postalCode)
@@ -61,6 +92,27 @@ namespace InterviewProject.Domain.Services.WeatherService
         throw new ArgumentNullException(nameof(postalCode));
       }
 
+      ChecksWeatherSettings();
+
+      return $"{_weatherAPISettings.BaseURL}/locations/v1/postalcodes/search?apikey={_weatherAPISettings.APIKey}&q={postalCode}";
+
+    }
+
+    private string BuildFiveDayForecaseURL(string locationKey)
+    {
+      if (string.IsNullOrEmpty(locationKey))
+      {
+        throw new ArgumentNullException(nameof(locationKey));
+      }
+
+      ChecksWeatherSettings();
+
+      return $"{_weatherAPISettings.BaseURL}/forecasts/v1/daily/5day/{locationKey}?apikey={_weatherAPISettings.APIKey}";
+
+    }
+
+    private void ChecksWeatherSettings()
+    {
       if (string.IsNullOrEmpty(_weatherAPISettings.APIKey))
       {
         throw new ArgumentNullException(nameof(_weatherAPISettings.APIKey));
@@ -70,9 +122,6 @@ namespace InterviewProject.Domain.Services.WeatherService
       {
         throw new ArgumentNullException(nameof(_weatherAPISettings.BaseURL));
       }
-
-      return $"{_weatherAPISettings.BaseURL}/locations/v1/postalcodes/search?apikey={_weatherAPISettings.APIKey}&q={postalCode}";
-
     }
   }
 }
