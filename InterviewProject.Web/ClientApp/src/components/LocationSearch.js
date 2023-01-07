@@ -1,15 +1,10 @@
-﻿import React, { Component, useState } from 'react';
+﻿import React, { useState } from 'react';
 
 const LocationSearch = (props) => {
     const [postalCode, setPostalCode] = useState('');
 
     const handlePostalCodeInputChance = (event) => {
         setPostalCode(event.target.value);
-    }
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        alert('form submited')
     }
 
     return (
