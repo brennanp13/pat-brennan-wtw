@@ -41,9 +41,15 @@ namespace InterviewProject.Controllers
     }
 
     [HttpGet]
-    public async Task<IEnumerable<WeatherForecast>> GetByLocation(string location)
+    public async Task<IEnumerable<WeatherForecast>> GetByLocation(string locationKey)
     {
-      return await _weatherService.GetFiveDayWeatherForecast(location);
+      return await _weatherService.GetFiveDayWeatherForecast(locationKey);
+    }
+
+    [HttpGet]
+    public async Task<IEnumerable<WeatherLocation>> GetLocationByPostalCode(string postalCode)
+    {
+      return await _weatherService.PostalCodeSearch(postalCode);
     }
   }
 }
