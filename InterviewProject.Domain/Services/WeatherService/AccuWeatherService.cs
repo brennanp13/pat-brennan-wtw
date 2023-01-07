@@ -2,6 +2,7 @@
 using InterviewProject.Domain.Models;
 using InterviewProject.Domain.Models.AccuWeatherModels;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -18,9 +19,9 @@ namespace InterviewProject.Domain.Services.WeatherService
     private readonly HttpClient _httpClient;
     private readonly ILogger<AccuWeatherService> _logger;
 
-    public AccuWeatherService(WeatherAPISettings weatherAPISettings, HttpClient httpClient, ILogger<AccuWeatherService> logger)
+    public AccuWeatherService(IOptions<WeatherAPISettings> weatherAPISettings, HttpClient httpClient, ILogger<AccuWeatherService> logger)
     {
-      _weatherAPISettings = weatherAPISettings;
+      _weatherAPISettings = weatherAPISettings.Value;
       _logger = logger;
 
 

@@ -2,6 +2,7 @@
 using InterviewProject.Domain.Models;
 using InterviewProject.Domain.Services.WeatherService;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Moq;
 using System;
 using System.Net;
@@ -32,7 +33,7 @@ namespace InterviewProjects.IntegrationTests
 
       _loggerMock = new();
 
-      _sut = new AccuWeatherService(_weatherAPISettings, _httpClient, _loggerMock.Object);
+      _sut = new AccuWeatherService(Options.Create(_weatherAPISettings), _httpClient, _loggerMock.Object);
     }
 
     [Fact]
@@ -97,7 +98,7 @@ namespace InterviewProjects.IntegrationTests
         BaseURL = BaseUrl
       };
 
-      _sut = new AccuWeatherService(_weatherAPISettings, _httpClient, _loggerMock.Object);
+      _sut = new AccuWeatherService(Options.Create(_weatherAPISettings), _httpClient, _loggerMock.Object);
       // Act
 
       var ex = await Assert.ThrowsAsync<ArgumentNullException>(() => _sut.PostalCodeSearch(postalCode));

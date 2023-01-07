@@ -40,13 +40,13 @@ namespace InterviewProject.Controllers
       .ToArray();
     }
 
-    [HttpGet]
+    [HttpGet("GetByLocation")]
     public async Task<IEnumerable<WeatherForecast>> GetByLocation(string locationKey)
     {
       return await _weatherService.GetFiveDayWeatherForecast(locationKey);
     }
 
-    [HttpGet]
+    [HttpGet("GetByLocationByPostalCode")]
     public async Task<IEnumerable<WeatherLocation>> GetLocationByPostalCode(string postalCode)
     {
       return await _weatherService.PostalCodeSearch(postalCode);

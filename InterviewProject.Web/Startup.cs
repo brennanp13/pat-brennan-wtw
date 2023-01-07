@@ -1,4 +1,5 @@
 using System.IO;
+using InterviewProject.Domain.Models;
 using InterviewProject.Domain.Services.WeatherService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,8 +25,9 @@ namespace InterviewProject
     {
 
       services.AddControllersWithViews();
-      services.AddSingleton<IWeatherService, AccuWeatherService>();
+      services.Configure<WeatherAPISettings>(Configuration.GetSection("WeatherAPI"));
 
+      services.AddTransient<IWeatherService, AccuWeatherService>();
       services.AddHttpClient<IWeatherService, AccuWeatherService>();
 
 
