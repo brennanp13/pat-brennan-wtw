@@ -43,7 +43,7 @@ namespace InterviewProject.Controllers
     [HttpGet]
     public async Task<IEnumerable<WeatherForecast>> GetByLocation(string location)
     {
-      return await _weatherService.GetWeatherForecast(location);
+      return await _weatherService.GetFiveDayWeatherForecast(location);
     }
   }
 }
