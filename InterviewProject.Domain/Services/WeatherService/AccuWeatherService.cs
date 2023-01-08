@@ -70,7 +70,8 @@ namespace InterviewProject.Domain.Services.WeatherService
 
           var content = await apiResponse.Content.ReadAsStringAsync();
           var locations = JsonConvert.DeserializeObject<IEnumerable<AccuWeatherLocation>>(content);
-          var result = locations.Select((location) => new WeatherLocation() { Key = location.Key, Name = location.EnglishName, Rank = location.Rank });
+          var result = locations.Select((location) => new WeatherLocation() { Key = location.Key, Name = location.EnglishName, Rank = location.Rank })
+                                 .OrderBy(o => o.Rank);
 
           return result;
         }
