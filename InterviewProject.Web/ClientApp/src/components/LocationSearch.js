@@ -8,15 +8,21 @@ const LocationSearch = (props) => {
     }
 
     return (
-        <div>
+        <div className="row">
             <form onSubmit={event => props.handleSubmit(event, postalCode)}>
-                <input
-                    onChange={handlePostalCodeInputChance}
-                    value={postalCode}
-                    placeholder='Enter Postal Code'
-                    name='postalCode'
-                />
-                <button>Submit</button>
+                <div className="input-group mb-3 col-xs-3">
+                    <input
+                        onChange={handlePostalCodeInputChance}
+                        value={postalCode}
+                        placeholder='Enter Postal Code'
+                        name='postalCode'
+                        className='form-control input-lg'
+                        required
+                    />
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit">Seach</button>
+                    </div>
+                </div>
             </form>
         </div>
     )

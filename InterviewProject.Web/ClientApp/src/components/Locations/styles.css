@@ -1,0 +1,7 @@
+﻿.location-list li {
+    font-size: larger;
+}
+
+.location-list a {
+    cursor: pointer;
+}
