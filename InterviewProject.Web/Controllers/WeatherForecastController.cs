@@ -27,29 +27,34 @@ namespace InterviewProject.Controllers
       _weatherService = weatherService;
     }
 
-    [HttpGet]
-    public IEnumerable<WeatherForecast> Get()
+    [HttpGet("GetByLocation")]
+    public async Task<IEnumerable<WeatherForecast>> GetByLocation(string locationKey)
     {
       var rng = new Random();
       return Enumerable.Range(1, 5).Select(index => new WeatherForecast
       {
         Date = DateTime.Now.AddDays(index),
-        TemperatureC = rng.Next(-20, 55),
-        Summary = Summaries[rng.Next(Summaries.Length)]
+        HighTemperature = rng.Next(40, 95),
+        LowTemmperature = rng.Next(20, 40)
       })
       .ToArray();
-    }
 
-    [HttpGet("GetByLocation")]
-    public async Task<IEnumerable<WeatherForecast>> GetByLocation(string locationKey)
-    {
-      return await _weatherService.GetFiveDayWeatherForecast(locationKey);
+      //return await _weatherService.GetFiveDayWeatherForecast(locationKey);
     }
 
     [HttpGet("GetByLocationByPostalCode")]
     public async Task<IEnumerable<WeatherLocation>> GetLocationByPostalCode(string postalCode)
     {
-      return await _weatherService.PostalCodeSearch(postalCode);
+      var locations = new List<WeatherLocation>()
+      {
+        new WeatherLocation() {Name = "Philly", Key= "123", Rank = 1},
+        new WeatherLocation() {Name = "New York", Key= "456", Rank = 2},
+        new WeatherLocation() {Name = "San Fran", Key= "789", Rank = 3}
+      };
+
+      return locations;
+
+      // return await _weatherService.PostalCodeSearch(postalCode);
     }
   }
 }
