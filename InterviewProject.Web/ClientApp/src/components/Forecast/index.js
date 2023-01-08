@@ -13,10 +13,20 @@ const Forecast = () => {
     const [forecastDays, setForecastDays] = useState([]);
     const [areForecastDaysLoading, setAreForecastDaysLoading] = useState(false);
 
+    useEffect(() => {
+        if (locations.length === 1) {
+            setLocationName(locations[0].name);
+            GetByForecastByLocation(locations[0].locationKey, setForecastDays, setAreForecastDaysLoading);
+            setAreLocationsLoading(false);
+            setDisplayLocations(false);
+        } else {
+            setDisplayLocations(true);
+        }
+    }, [locations])
+
     const handlePostalCodeSubmit = (event, postalCode) => {
         event.preventDefault();
         setAreLocationsLoading(true);
-        setDisplayLocations(true);
         GetByLocationByPostalCode(postalCode, setLocations, setAreLocationsLoading);
     }
 
@@ -29,9 +39,8 @@ const Forecast = () => {
 
     return (
         <div>
-            Forecast <br />
-            <LocationSerach handleSubmit={handlePostalCodeSubmit} />
-            {displayLocaitons && <Locations locations={locations} handleLocationClicked={handleLocationClicked} isLoading={areLocationsLoading} />}
+            <LocationSerach handleSubmit={handlePostalCodeSubmit} isLoading={areLocationsLoading} />
+            {displayLocaitons && <Locations locations={locations} handleLocationClicked={handleLocationClicked} />}
             {<ForecastDays locationName={locationName} forecastDays={forecastDays} isLoading={areForecastDaysLoading} />}
         </div>
     )

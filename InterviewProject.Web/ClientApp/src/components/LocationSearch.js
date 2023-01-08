@@ -8,9 +8,9 @@ const LocationSearch = (props) => {
     }
 
     return (
-        <div className="row">
+        <div className='row'>
             <form onSubmit={event => props.handleSubmit(event, postalCode)}>
-                <div className="input-group mb-3 col-xs-3">
+                <div className='input-group mb-3 col-xs-3'>
                     <input
                         onChange={handlePostalCodeInputChance}
                         value={postalCode}
@@ -19,8 +19,8 @@ const LocationSearch = (props) => {
                         className='form-control input-lg'
                         required
                     />
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="submit">Seach</button>
+                    <div class='input-group-append'>
+                        {props.isLoading ? <button class='btn btn-outline-secondary'>Loading...</button> : <button class='btn btn-outline-secondary' type='submit'>Seach</button>}
                     </div>
                 </div>
             </form>

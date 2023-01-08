@@ -48,9 +48,9 @@ namespace InterviewProject.Controllers
     {
       var locations = new List<WeatherLocation>()
       {
-        new WeatherLocation() {Name = "Philly", Key= "123", Rank = 1},
-        new WeatherLocation() {Name = "New York", Key= "456", Rank = 2},
-        new WeatherLocation() {Name = "San Fran", Key= "789", Rank = 3}
+        new WeatherLocation() {Name = "Philly", Key= "123", Rank = 1}
+     //   new WeatherLocation() {Name = "New York", Key= "456", Rank = 2},
+      //  new WeatherLocation() {Name = "San Fran", Key= "789", Rank = 3}
       };
 
       return locations;

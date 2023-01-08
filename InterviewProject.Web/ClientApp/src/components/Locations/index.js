@@ -3,9 +3,6 @@
 import './styles.css'
 
 const Locations = (props) => {
-    if (props.isLoading) {
-        return <div data-testid={'locations-loading'}>Loading</div>;
-    }
     if (props.locations.length > 0) {
         return (
             <div data-testid={'locations-list'} className='location-list'>
