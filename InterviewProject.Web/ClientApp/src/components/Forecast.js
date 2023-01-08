@@ -6,6 +6,7 @@ import ForecastDays from './ForecastDays';
 
 const Forecast = () => {
     const [locations, setLocations] = useState([]);
+    const [displayLocaitons, setDisplayLocations] = useState(false);
     const [areLocationsLoading, setAreLocationsLoading] = useState(false);
 
     const [forecastDays, setForecastDays] = useState([]);
@@ -14,11 +15,13 @@ const Forecast = () => {
     const handlePostalCodeSubmit = (event, postalCode) => {
         event.preventDefault();
         setAreLocationsLoading(true);
+        setDisplayLocations(true);
         GetByLocationByPostalCode(postalCode, setLocations, setAreLocationsLoading);
     }
 
     const handleLocationClicked = (locationKey) => {
         setAreForecastDaysLoading(true);
+        setDisplayLocations(false);
         GetByForecastByLocation(locationKey, setForecastDays, setAreForecastDaysLoading);
     }
 
@@ -26,7 +29,7 @@ const Forecast = () => {
         <div>
             Forecast <br />
             <LocationSerach handleSubmit={handlePostalCodeSubmit} />
-            {<Locations locations={locations} handleLocationClicked={handleLocationClicked} areLocationsLoading={areLocationsLoading} />}
+            {displayLocaitons && <Locations locations={locations} handleLocationClicked={handleLocationClicked} isLoading={areLocationsLoading} />}
             {<ForecastDays forecastDays={forecastDays} isLoading={areForecastDaysLoading} />}
         </div>
     )
