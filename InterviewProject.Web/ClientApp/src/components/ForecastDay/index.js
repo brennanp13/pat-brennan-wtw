@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import moment from 'moment'
 
-import './ForecastDay.css'
+import './styles.css'
 
 const ForecastDay = (props) => {
     console.log("Forecast day props", props);

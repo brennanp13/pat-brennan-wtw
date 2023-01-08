@@ -12,7 +12,7 @@ const Locations = (props) => {
                 <ul>
                     {props.locations.map(location =>
                         <li key={location.key}>
-                            <a onClick={() => props.handleLocationClicked(location.key)}>{location.name}</a>
+                            <a onClick={() => props.handleLocationClicked(location.key, location.name)}>{location.name}</a>
                         </li>
                     )}
                 </ul>
