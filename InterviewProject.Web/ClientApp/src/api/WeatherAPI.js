@@ -7,7 +7,6 @@ export function GetByLocationByPostalCode(postalCode, setLocations, setIsLoading
             if (setLocations) {
                 setLocations(response.data);
             }
-            return response.data;
         })
         .catch(error => {
             console.error(`Error: ${error}`);
@@ -19,16 +18,20 @@ export function GetByLocationByPostalCode(postalCode, setLocations, setIsLoading
         });
 }
 
-export function GetByLocation(locationKey, setForecast) {
+export function GetByForecastByLocation(locationKey, setForecast, setIsLoading) {
     axios.get('weatherforecast/GetByLocation?locationKey=' + locationKey)
         .then((response) => {
             console.log('weatherforecast response', response.data);
             if (setForecast) {
                 setForecast(response.data);
             }
-            return response.data;
         })
         .catch(error => {
             console.error(`Error: ${error}`);
         })
+        .finally(() => {
+            if (setIsLoading) {
+                setIsLoading(false);
+            }
+        });
 }

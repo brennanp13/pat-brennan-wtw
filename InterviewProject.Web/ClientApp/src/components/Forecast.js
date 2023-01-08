@@ -1,14 +1,15 @@
 ﻿import React, { Component, useState, useEffect } from 'react';
 import LocationSerach from './LocationSearch';
-import { GetByLocationByPostalCode } from '../api/WeatherAPI';
+import { GetByLocationByPostalCode, GetByForecastByLocation } from '../api/WeatherAPI';
 import Locations from './Locations';
 import ForecastDays from './ForecastDays';
 
 const Forecast = () => {
     const [locations, setLocations] = useState([]);
     const [areLocationsLoading, setAreLocationsLoading] = useState(false);
-    const [locationKey, setLocationKey] = useState('');
+
     const [forecastDays, setForecastDays] = useState([]);
+    const [areForecastDaysLoading, setAreForecastDaysLoading] = useState(false);
 
     const handlePostalCodeSubmit = (event, postalCode) => {
         event.preventDefault();
@@ -17,8 +18,8 @@ const Forecast = () => {
     }
 
     const handleLocationClicked = (locationKey) => {
-        console.log(locationKey);
-        setLocationKey(locationKey);
+        setAreForecastDaysLoading(true);
+        GetByForecastByLocation(locationKey, setForecastDays, setAreForecastDaysLoading);
     }
 
     return (
@@ -26,7 +27,7 @@ const Forecast = () => {
             Forecast <br />
             <LocationSerach handleSubmit={handlePostalCodeSubmit} />
             {<Locations locations={locations} handleLocationClicked={handleLocationClicked} areLocationsLoading={areLocationsLoading} />}
-            {<ForecastDays forecastDays={forecastDays} />}
+            {<ForecastDays forecastDays={forecastDays} isLoading={areForecastDaysLoading} />}
         </div>
     )
 }

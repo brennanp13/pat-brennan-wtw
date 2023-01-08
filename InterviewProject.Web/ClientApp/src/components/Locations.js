@@ -2,11 +2,10 @@
 
 
 const Locations = (props) => {
-    console.log(props);
     if (props.areLocationsLoading) {
         return <div>Loading</div>;
     }
-    if (props.locations.length > 1) {
+    if (props.locations.length > 0) {
         return (
             <div>
                 <div>Please select a location:</div>
