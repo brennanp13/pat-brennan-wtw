@@ -35,7 +35,8 @@ namespace InterviewProject.Controllers
       {
         Date = DateTime.Now.AddDays(index),
         HighTemperature = rng.Next(40, 95),
-        LowTemmperature = rng.Next(20, 40)
+        LowTemmperature = rng.Next(20, 40),
+        DayIcon = convetIconDigits(rng.Next(1, 44))
       })
       .ToArray();
 
@@ -55,6 +56,16 @@ namespace InterviewProject.Controllers
       return locations;
 
       // return await _weatherService.PostalCodeSearch(postalCode);
+    }
+
+    private string convetIconDigits(int dayIcon)
+    {
+      if (dayIcon < 10)
+      {
+        return "0" + dayIcon.ToString();
+      }
+
+      return dayIcon.ToString();
     }
   }
 }

@@ -7,5 +7,6 @@ namespace InterviewProject.Domain.Models
     public DateTime Date { get; set; }
     public double HighTemperature { get; set; }
     public double LowTemmperature { get; set; }
+    public string DayIcon { get; set; }
   }
 }
