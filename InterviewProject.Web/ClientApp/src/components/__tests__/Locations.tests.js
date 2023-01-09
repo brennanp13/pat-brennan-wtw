@@ -11,8 +11,17 @@ describe('Locations', () => {
             { key: 2, name: "New York" }
         ]
         
-        render(<Locations locations={locations} isLoading={false} handleLocationClicked={() => { }} />);
+        render(<Locations locations={locations} isLoading={false} handleLocationClicked={() => { }} noLocationsFoundError={false}/>);
         const locationList = screen.getByTestId('locations-list');
         expect(locationList).toBeInTheDocument();
     });
+
+    it('should render no locations found message', () => {
+        const locations = []
+
+        render(<Locations locations={locations} isLoading={false} handleLocationClicked={() => { }} noLocationsFoundError={true} />);
+        const locationsNoneFound = screen.getByTestId('locations-none-found');
+        expect(locationsNoneFound).toBeInTheDocument();
+    });
+
 });
