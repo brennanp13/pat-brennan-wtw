@@ -14,10 +14,11 @@ export default class App extends Component {
     render() {
         return (
             <Layout>
-                <Route exact path='/' component={Home} />
+                <Route exact path='/' component={Forecast} />
                 <Route path='/counter' component={Counter} />
                 <Route path='/weather' component={Weather} />
                 <Route path='/forecast' component={Forecast} />
+                <Route path='/home' component={Home} />
             </Layout>
         );
     }
