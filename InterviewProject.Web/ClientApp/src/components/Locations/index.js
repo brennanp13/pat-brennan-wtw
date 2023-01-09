@@ -18,6 +18,12 @@ const Locations = (props) => {
         )
     }
 
+    if (props.noLocationsFoundError) {
+        return (
+            <span data-testid='locations-none-found'>No locations found for this postal code</span>
+        )
+    }
+
     return null;
 }
 
