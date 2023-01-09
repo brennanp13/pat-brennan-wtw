@@ -13,11 +13,6 @@ namespace InterviewProject.Controllers
   [Route("[controller]")]
   public class WeatherForecastController : ControllerBase
   {
-    private static readonly string[] Summaries = new[]
-    {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
     private readonly ILogger<WeatherForecastController> _logger;
     private readonly IWeatherService _weatherService;
 
@@ -30,32 +25,34 @@ namespace InterviewProject.Controllers
     [HttpGet("GetByLocation")]
     public async Task<IEnumerable<WeatherForecast>> GetByLocation(string locationKey)
     {
-      var rng = new Random();
-      return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-      {
-        Date = DateTime.Now.AddDays(index),
-        HighTemperature = rng.Next(40, 95),
-        LowTemmperature = rng.Next(20, 40),
-        DayIcon = convetIconDigits(rng.Next(1, 44))
-      })
-      .ToArray();
+      //var rng = new Random();
+      //return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+      //{
+      //  Date = DateTime.Now.AddDays(index),
+      //  HighTemperature = rng.Next(40, 95),
+      //  LowTemmperature = rng.Next(20, 40),
+      //  DayIcon = convetIconDigits(rng.Next(1, 44))
+      //})
+      //.ToArray();
 
-      //return await _weatherService.GetFiveDayWeatherForecast(locationKey);
+      return await _weatherService.GetFiveDayWeatherForecast(locationKey);
     }
 
     [HttpGet("GetByLocationByPostalCode")]
     public async Task<IEnumerable<WeatherLocation>> GetLocationByPostalCode(string postalCode)
     {
-      var locations = new List<WeatherLocation>()
-      {
-        new WeatherLocation() {Name = "Philly", Key= "123", Rank = 1}
-     //   new WeatherLocation() {Name = "New York", Key= "456", Rank = 2},
+
+      // for mocking response
+      //var locations = new List<WeatherLocation>()
+      //{
+      //  new WeatherLocation() {Name = "Philly", Key= "123", Rank = 1},
+      //  new WeatherLocation() {Name = "New York", Key= "456", Rank = 2},
       //  new WeatherLocation() {Name = "San Fran", Key= "789", Rank = 3}
-      };
+      //};
 
-      return locations;
+      //return locations;
 
-      // return await _weatherService.PostalCodeSearch(postalCode);
+      return await _weatherService.PostalCodeSearch(postalCode);
     }
 
     private string convetIconDigits(int dayIcon)
