@@ -19,8 +19,8 @@ const LocationSearch = (props) => {
                         className='form-control input-lg'
                         required
                     />
-                    <div class='input-group-append'>
-                        {props.isLoading ? <button class='btn btn-outline-secondary' data-testId='locations-loading'>Loading...</button> : <button class='btn btn-outline-secondary' type='submit' data-testId='locations-search'>Seach</button>}
+                    <div className='input-group-append'>
+                        {props.isLoading ? <button className='btn btn-outline-secondary' data-testid='locations-loading'>Loading...</button> : <button className='btn btn-outline-secondary' type='submit' data-testid='locations-search'>Seach</button>}
                     </div>
                 </div>
             </form>

@@ -19,6 +19,8 @@
     "rimraf": "^2.6.2"
   },
   "devDependencies": {
+    "@testing-library/dom": "^8.19.1",
+    "@testing-library/react": "^12.1.2",
     "ajv": "^6.9.1",
     "cross-env": "^5.2.0",
     "eslint": "^5.12.0",
