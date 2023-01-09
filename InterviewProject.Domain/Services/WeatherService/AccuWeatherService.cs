@@ -42,7 +42,7 @@ namespace InterviewProject.Domain.Services.WeatherService
 
           var content = await apiResponse.Content.ReadAsStringAsync();
           var forecast = JsonConvert.DeserializeObject<AccuWeatherForecast>(content);
-          var result = forecast.DailyForecasts.Select((f) => new WeatherForecast() { Date = f.Date, HighTemperature = f.Temperature.Maximum.Value, LowTemmperature = f.Temperature.Minimum.Value, DayIcon = f.Day.Icon.ToString()  });
+          var result = forecast.DailyForecasts.Select((f) => new WeatherForecast() { Date = f.Date, HighTemperature = f.Temperature.Maximum.Value, LowTemmperature = f.Temperature.Minimum.Value, DayIcon = convetIconDigits(f.Day.Icon)  });
 
           return result;
         }
@@ -125,5 +125,15 @@ namespace InterviewProject.Domain.Services.WeatherService
         throw new ArgumentNullException(nameof(_weatherAPISettings.BaseURL));
       }
     }
+    private string convetIconDigits(int dayIcon)
+    {
+      if (dayIcon < 10)
+      {
+        return "0" + dayIcon.ToString();
+      }
+
+      return dayIcon.ToString();
+    }
+
   }
 }
