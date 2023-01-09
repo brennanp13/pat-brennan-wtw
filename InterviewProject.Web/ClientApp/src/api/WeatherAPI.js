@@ -1,6 +1,6 @@
 ﻿import axios from 'axios';
 
-export function GetByLocationByPostalCode(postalCode, setLocations, setIsLoading) {
+export function GetByLocationByPostalCode(postalCode, setLocations, setIsLoading, setLocationSearchHasError) {
     axios.get('weatherforecast/GetByLocationByPostalCode?postalCode=' + postalCode)
         .then((response) => {
             console.log('weatherforecast response', response.data);
@@ -10,6 +10,9 @@ export function GetByLocationByPostalCode(postalCode, setLocations, setIsLoading
         })
         .catch(error => {
             console.error(`Error: ${error}`);
+            if (setLocationSearchHasError) {
+                setLocationSearchHasError(true);
+            }
         })
         .finally(() => {
             if (setIsLoading) {
@@ -18,7 +21,7 @@ export function GetByLocationByPostalCode(postalCode, setLocations, setIsLoading
         });
 }
 
-export function GetByForecastByLocation(locationKey, setForecast, setIsLoading) {
+export function GetByForecastByLocation(locationKey, setForecast, setIsLoading, setForecastDaysHasErrors) {
     axios.get('weatherforecast/GetByLocation?locationKey=' + locationKey)
         .then((response) => {
             console.log('weatherforecast response', response.data);
@@ -28,6 +31,9 @@ export function GetByForecastByLocation(locationKey, setForecast, setIsLoading) 
         })
         .catch(error => {
             console.error(`Error: ${error}`);
+            if (setForecastDaysHasErrors) {
+                setForecastDaysHasErrors(true);
+            }
         })
         .finally(() => {
             if (setIsLoading) {

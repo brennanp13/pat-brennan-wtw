@@ -23,6 +23,7 @@ const LocationSearch = (props) => {
                     <div className='input-group-append'>
                         {props.isLoading ? <button className='btn btn-outline-secondary' data-testid='locations-loading'>Loading...</button> : <button className='btn btn-outline-secondary' type='submit' data-testid='locations-search'>Seach</button>}
                     </div>
+                    {props.hasError && <span data-testid='locations-search-error'>There was an error searching for the postal code</span>}
                 </div>
             </form>
         </div>

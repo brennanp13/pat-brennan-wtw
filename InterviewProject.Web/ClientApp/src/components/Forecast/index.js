@@ -7,6 +7,8 @@ import ForecastDays from '../ForecastDays';
 const Forecast = () => {
     const [locations, setLocations] = useState([]);
     const [locationName, setLocationName] = useState('');
+    const [locationSearchHasError, setLocationSearchHasError] = useState(false);
+
     const [noLocationsFoundError, setNoLocationsFoundError] = useState(false);
 
     const [displayLocaitons, setDisplayLocations] = useState(false);
@@ -15,6 +17,7 @@ const Forecast = () => {
     const [forecastDays, setForecastDays] = useState([]);
     const [displayForecastDays, setDisplayForecastDays] = useState(false);
     const [areForecastDaysLoading, setAreForecastDaysLoading] = useState(false);
+    const [forecastDaysHasErrors, setForecastDaysHasErrors] = useState(false);
 
     const [wasSearchClicked, setWasSearchClicked] = useState(false);
 
@@ -22,18 +25,17 @@ const Forecast = () => {
         if (wasSearchClicked) {
             setWasSearchClicked(false);
 
-;            if (locations.length === 1) {
+            ; if (locations.length === 1) {
                 setLocationName(locations[0].name);
+                setForecastDaysHasErrors(false);
                 GetByForecastByLocation(locations[0].locationKey, setForecastDays, setAreForecastDaysLoading);
                 setAreLocationsLoading(false);
                 setDisplayLocations(false);
                 setDisplayForecastDays(true);
             }
             else if (locations.length === 0) {
-                console.log("no locations found");
                 setNoLocationsFoundError(true);
                 setDisplayLocations(true);
-                console.log("no locations found error state", noLocationsFoundError);
             }
             else {
                 setDisplayLocations(true);
@@ -44,7 +46,8 @@ const Forecast = () => {
     const handlePostalCodeSubmit = (event, postalCode) => {
         event.preventDefault();
         setAreLocationsLoading(true);
-        GetByLocationByPostalCode(postalCode, setLocations, setAreLocationsLoading);
+        setLocationSearchHasError(false);
+        GetByLocationByPostalCode(postalCode, setLocations, setAreLocationsLoading, setLocationSearchHasError);
         setDisplayForecastDays(false);
         setWasSearchClicked(true);
     }
@@ -53,15 +56,16 @@ const Forecast = () => {
         setDisplayForecastDays(true);
         setAreForecastDaysLoading(true);
         setDisplayLocations(false);
+        setForecastDaysHasErrors(false);
         setLocationName(locationName);
-        GetByForecastByLocation(locationKey, setForecastDays, setAreForecastDaysLoading);
+        GetByForecastByLocation(locationKey, setForecastDays, setAreForecastDaysLoading, setForecastDaysHasErrors);
     }
 
     return (
         <div>
-            <LocationSerach handleSubmit={handlePostalCodeSubmit} isLoading={areLocationsLoading} />
+            <LocationSerach handleSubmit={handlePostalCodeSubmit} isLoading={areLocationsLoading} hasError={locationSearchHasError} />
             {displayLocaitons && <Locations locations={locations} handleLocationClicked={handleLocationClicked} noLocationsFoundError={noLocationsFoundError} />}
-            {displayForecastDays && <ForecastDays locationName={locationName} forecastDays={forecastDays} isLoading={areForecastDaysLoading} />}
+            {displayForecastDays && <ForecastDays locationName={locationName} forecastDays={forecastDays} isLoading={areForecastDaysLoading} hasError={forecastDaysHasErrors} />}
         </div>
     )
 }
