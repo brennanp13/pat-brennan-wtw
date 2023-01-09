@@ -8,5 +8,6 @@ namespace InterviewProject.Domain.Models
     public double HighTemperature { get; set; }
     public double LowTemmperature { get; set; }
     public string DayIcon { get; set; }
+    public string Phrase { get; set; }
   }
 }

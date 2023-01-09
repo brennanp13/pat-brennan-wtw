@@ -42,7 +42,7 @@ namespace InterviewProject.Domain.Services.WeatherService
 
           var content = await apiResponse.Content.ReadAsStringAsync();
           var forecast = JsonConvert.DeserializeObject<AccuWeatherForecast>(content);
-          var result = forecast.DailyForecasts.Select((f) => new WeatherForecast() { Date = f.Date, HighTemperature = f.Temperature.Maximum.Value, LowTemmperature = f.Temperature.Minimum.Value, DayIcon = convetIconDigits(f.Day.Icon)  });
+          var result = forecast.DailyForecasts.Select((f) => new WeatherForecast() { Date = f.Date, HighTemperature = f.Temperature.Maximum.Value, LowTemmperature = f.Temperature.Minimum.Value, DayIcon = convetIconDigits(f.Day.Icon), Phrase = f.Day.IconPhrase  });
 
           return result;
         }

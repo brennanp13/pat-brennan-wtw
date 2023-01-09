@@ -5,7 +5,7 @@ import './styles.css'
 
 const ForecastDay = (props) => {
     console.log("Forecast day props", props);
-    // would not do this in production, but rather download the assets locally
+    // would not do this in production, but rather have the assets locally
     const iconUrl = `https://apidev.accuweather.com/developers/Media/Default/WeatherIcons/${props.forecastDay.dayIcon}-s.png`;
 
     return (
@@ -16,6 +16,9 @@ const ForecastDay = (props) => {
             <span className='forecast-day-low'>{props.forecastDay.lowTemmperature}°</span>
             <div>
                 <img src={iconUrl} />
+            </div>
+            <div>
+                {props.forecastDay.phrase}
             </div>
         </div>
     )
