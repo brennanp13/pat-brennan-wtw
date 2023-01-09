@@ -21,6 +21,8 @@ namespace InterviewProject.Domain.Services.WeatherService
 
     public AccuWeatherService(IOptions<WeatherAPISettings> weatherAPISettings, HttpClient httpClient, ILogger<AccuWeatherService> logger)
     {
+      // The API key should not be stored in appsettings and checked into the code base.  It should be stored in an API key vault.  
+      //  Putting it in the appsettings for demo purposes
       _weatherAPISettings = weatherAPISettings.Value;
       _logger = logger;
 
