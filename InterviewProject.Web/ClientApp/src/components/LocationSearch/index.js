@@ -11,10 +11,11 @@ const LocationSearch = (props) => {
         <div className='row'>
             <form onSubmit={event => props.handleSubmit(event, postalCode)}>
                 <div className='input-group mb-3 col-xs-3'>
+                    <label for="postalCode" class="col-form-label mr-3">Enter Postal Code:   </label>
                     <input
                         onChange={handlePostalCodeInputChance}
                         value={postalCode}
-                        placeholder='Enter Postal Code'
+                        placeholder='Postal Code'
                         name='postalCode'
                         className='form-control input-lg'
                         required
